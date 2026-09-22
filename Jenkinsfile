@@ -8,7 +8,7 @@ pipeline {
     environment {
         COMPOSE_PROJECT_NAME = "mini-project-devops"
         DOCKERHUB_CREDENTIALS = credentials('docker-hub-cred')
-        IMAGE_TAG = "${env.GIT_COMMIT.take(7)}"
+        IMAGE_TAG = "v${env.BUILD_NUMBER}"
     }
 
     stages {
