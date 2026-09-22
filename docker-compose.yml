@@ -1,15 +1,16 @@
 services:
   backend:
+    image: senji99/mini-project-backend:${IMAGE_TAG}
     build: ./backend
     ports:
       - "8081:8081"
     restart: unless-stopped
 
   frontend:
+    image: senji99/mini-project-frontend:${IMAGE_TAG}
     build:
       context: ./frontend
       args:
-        # Use the Docker network name so the frontend container can reach the backend container
         NEXT_PUBLIC_API_URL: http://backend:8081
     ports:
       - "3000:3000"
