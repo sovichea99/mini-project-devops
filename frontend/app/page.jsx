@@ -82,7 +82,7 @@ export default function Home() {
     <>
       <header className="nav">
         <div className="wrap nav-inner">
-          <span className="brand">Fast Roads</span>
+          <span className="brand">Slow Roads</span>
           <nav className="nav-links">
             <a href="#destinations">Destinations</a>
             <a href="#route">A route</a>
