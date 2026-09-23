@@ -39,7 +39,7 @@ pipeline {
                     cd gitops-repo
                     yq -i ".image.tag = \\"${IMAGE_TAG}\\"" frontend-helm/values.yaml
                     git config user.email "chea02310@gmail.com"
-                    git config user.name "Jenkins CI"
+                    git config user.name "sovichea99"
                     git add .
                     git commit -m "Update image tag to ${IMAGE_TAG}"
                     git push
