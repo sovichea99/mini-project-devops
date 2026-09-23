@@ -9,7 +9,7 @@ pipeline {
         COMPOSE_PROJECT_NAME = "mini-project-devops"
         DOCKERHUB_CREDENTIALS = credentials('docker-hub-cred')
         IMAGE_TAG = "v${env.BUILD_NUMBER}"
-        GITOPS_REPO = "https://github.com/sovichea99/mini-project-devops-gitops.git"
+        GITOPS_CREDENTIALS = credentials('gitops-repo-cred')
     }
 
     stages {
@@ -35,11 +35,11 @@ pipeline {
             steps {
                 sh '''
                     rm -rf gitops-repo
-                    git clone https://github.com/sovichea99/mini-project-devops-gitops.git gitops-repo
+                    git clone https://${GITOPS_CREDENTIALS_USR}:${GITOPS_CREDENTIALS_PSW}@github.com/sovichea99/mini-project-devops-gitops.git gitops-repo
                     cd gitops-repo
                     yq -i ".image.tag = \\"${IMAGE_TAG}\\"" frontend-helm/values.yaml
                     git config user.email "chea02310@gmail.com"
-                    git config user.name "sovichea99"
+                    git config user.name "jenkins-ci"
                     git add .
                     git commit -m "Update image tag to ${IMAGE_TAG}"
                     git push
