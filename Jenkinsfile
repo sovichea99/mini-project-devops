@@ -9,6 +9,7 @@ pipeline {
         COMPOSE_PROJECT_NAME = "mini-project-devops"
         DOCKERHUB_CREDENTIALS = credentials('docker-hub-cred')
         IMAGE_TAG = "v${env.BUILD_NUMBER}"
+        GITOPS_REPO = "https://github.com/sovichea99/mini-project-devops-gitops.git"
     }
 
     stages {
@@ -30,11 +31,18 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+        stage('Update GitOps Manifest') {
             steps {
                 sh '''
-                    docker compose pull
-                    docker compose up -d
+                    rm -rf gitops-repo
+                    git clone https://github.com/sovichea99/mini-project-devops-gitops.git gitops-repo
+                    cd gitops-repo
+                    yq -i ".image.tag = \\"${IMAGE_TAG}\\"" frontend-helm/values.yaml
+                    git config user.email "chea02310@gmail.com"
+                    git config user.name "Jenkins CI"
+                    git add .
+                    git commit -m "Update image tag to ${IMAGE_TAG}"
+                    git push
                 '''
             }
         }
@@ -42,7 +50,7 @@ pipeline {
 
     post {
         success {
-            echo 'Successfully built, pushed, and deployed.'
+            echo 'Built, pushed, and GitOps repo updated — ArgoCD will sync shortly.'
         }
 
         failure {
