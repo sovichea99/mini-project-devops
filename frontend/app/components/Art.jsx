@@ -1,7 +1,3 @@
-// Hand-drawn-style line art, single stroke colour, shared visual language
-// across the site. Stroke colour is passed in so the same marks work on
-// dark (hero) and light (card) backgrounds.
-
 export function TempleSkyline({ stroke = "#e3ba7c", opacity = 1, style }) {
   return (
     <svg
