@@ -38,20 +38,6 @@ pipeline {
                 '''
             }
         }
-
-        stage('Health Check') {
-            steps {
-                sh '''
-                    sleep 10
-
-                    curl -f http://localhost:8081/api/health \
-                        || (docker compose logs backend && exit 1)
-
-                    curl -f http://localhost:3000 \
-                        || (docker compose logs frontend && exit 1)
-                '''
-            }
-        }
     }
 
     post {

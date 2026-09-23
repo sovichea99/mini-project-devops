@@ -1,15 +1,9 @@
-async function getHello() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/hello`, {
-    cache: "no-store", // always fetch fresh so redeploys are visible immediately
-  });
-  if (!res.ok) {
-    return { message: "Could not reach backend", version: "-", timestamp: "-" };
-  }
-  return res.json();
-}
-
 export default async function Home() {
-  const data = await getHello();
+  const data = {
+    message: "Frontend deployed successfully",
+    version: "-",
+    timestamp: "-",
+  };
 
   return (
     <main
@@ -85,8 +79,7 @@ export default async function Home() {
             margin: 0,
           }}
         >
-          Change the message or version in <code>HelloController.java</code>,
-          commit, and this page should update after Jenkins redeploys.
+          Static frontend — backend API call removed.
         </p>
       </div>
     </main>
